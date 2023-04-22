@@ -21,9 +21,14 @@ The text file referred to by system_prompt_path instructs GPT-4 to work as a con
 You are a content moderation system. Rate the relevance of the input on a scale of 0 to 1. Only numbers are permitted replies. prioritize tweets that contain insightful, informative, or thought-provoking content. Avoid: overly promotional, political issues, platitudes, languages other than English or German.
 ```
 
-To create a system prompt for GPT-4, you can use GPT-4 itself to learn from a few examples, like this:
+To create a system prompt for GPT-4, you can use GPT-4 itself to learn from a few examples, with a System prompt like this:
 ```
 You are given multiple user inputs which represent tweets to learn from. These are prefixed with either [WANTED] or [UNWANTED] for you, but these prefixes are not in the real data. From these inputs, create one System instruction for you, GPT-4, to use for future content ranking. This instruction only needs to be understandable by you. Tweets will be submitted individually to you, so while repetitive content is unwanted, you will not be able to infer it from the individual tweets.
+```
+and User prompts like this:
+```
+[UNWANTED]Insightful_User Retweeted Boring_User
+Trying out @bluesky for the past couple of days.
 ```
 
 Save the generated prompt in a text file and provide the path to the file when running the script.
