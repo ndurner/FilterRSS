@@ -96,6 +96,8 @@ def main():
             plain_description = html_to_plain_text(entry.description)
             prompt = f"{plain_description}"
 
+            score_retrieval_successful = False
+
             try:
                 response = openai.ChatCompletion.create(
                     model="gpt-4",
@@ -107,18 +109,19 @@ def main():
                     temperature=0
                 )
                 score = float(response.choices[0].message['content'].strip())
+                score_retrieval_successful = True
             except openai.OpenAIError as e:
                 print(f"Error: An error occurred while making a request to the OpenAI API: {e}")
-                sys.exit(1)
+                score = 0.661
             except ValueError:
-                score = 0.66
+                score = 0.662
             
-            print(prompt, "\nscore:\n", score);
-
-            cursor.execute("INSERT INTO scores (entry_id, score, timestamp) VALUES (?, ?, ?)", (entry.id, score, datetime.utcnow()))
+            if score_retrieval_successful:
+                print(prompt, "\nscore:\n", score);
+                cursor.execute("INSERT INTO scores (entry_id, score, timestamp) VALUES (?, ?, ?)", (entry.id, score, datetime.utcnow()))
 
         # If the score meets the threshold, add the entry to the filtered list
-        if score >= args.threshold:
+        if score >= args.threshold or not score_retrieval_successful:
             entry.score = score
             filtered_entries.append(entry)
 
