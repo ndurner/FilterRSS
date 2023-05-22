@@ -86,9 +86,11 @@ def main():
         cursor.execute("SELECT score FROM scores WHERE entry_id = ?", (entry.id,))
         row = cursor.fetchone()
 
+        score_retrieval_successful = False
         if row:
             print(f"got filter result cached for {entry.id}")
             score = row[0]
+            score_retrieval_successful = True
         else:
             print(f"requesting filter result for {entry.id}")
 
