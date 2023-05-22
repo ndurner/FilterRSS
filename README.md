@@ -1,6 +1,6 @@
 # Filter RSS Feed with GPT-4
 
-A Python script to filter an RSS feed by requesting relevance scores from GPT-4 and only including entries that meet a user-defined threshold.
+A Python script to filter an RSS feed by requesting relevance scores from GPT-4 and only including entries that meet a user-defined threshold. Tried & proven with [Twitter2RSS](https://github.com/ndurner/fb2rss).
 
 ## Usage
 
